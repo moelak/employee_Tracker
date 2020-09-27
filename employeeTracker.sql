@@ -30,22 +30,8 @@ SELECT * FROM employee ;
 SELECT * FROM employeeRole ;
 SELECT * FROM department ;
 
--- SELECT * FROM employee Inner Join employeeRole on employee.role_id = employeeRole.id 
--- Inner Join department on  department.id= employeeRole.department_id;
 
 SELECT * FROM employee Inner Join employeeRole on employee.role_id = employeeRole.id 
 Inner Join department on  department.id= employeeRole.department_id
-
-
--- INSERT INTO department (department_name)
--- VALUES ("sales"),("engineering");
-
-
--- INSERT INTO employeeRole (title,salary,department_id)
--- VALUES ("sales lead", 12000, 1),("software engin", 16000, 2);
-
--- INSERT INTO employee (first_name, last_name, role_id,manger_id)
--- VALUES ("moe","lak",1,1),("mahsa","madin", 2, 2);
-
 
 

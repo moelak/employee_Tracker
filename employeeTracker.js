@@ -84,30 +84,37 @@ function whatToDO() {
 }
 
 function viewEmployee() {
+  let counter = 0;
+  viewAllEmployee = [];
+
   var query =
     'SELECT * FROM employee Inner Join employeeRole on employee.role_id = employeeRole.id Inner Join department on  department.id= employeeRole.department_id ORDER BY employee.employee_id;';
   connection.query(query, function (err, res) {
     for (var i = 0; i < res.length; i++) {
-      // instantiate
-      // console.log(
-      //   `${${res[i].employee_id}}  ${res[i].first_name}   ${res[i].last_name}   ${res[i].title}  ${res[i].department_name}  ${res[i].salary} `
-      // );
       viewAllEmployee.push([
         res[i].employee_id,
         res[i].first_name,
         res[i].last_name,
+        res[i].title,
+        res[i].department_name,
+        res[i].salary,
+        res[i].manger_id,
       ]);
     }
 
-    console.log(viewAllEmployee);
-
     var table = new Table();
-
-    table.push(['Id', 'First Name', 'Last Name'], viewAllEmployee);
-    table.push(
-      { 'Some key': 'Some value' },
-      { 'Another key': 'Another value' }
-    );
+    table.push([
+      'Id',
+      'First Name',
+      'Last Name',
+      'Title',
+      'Department',
+      'Salary',
+      'Manager ID',
+    ]);
+    while (counter < viewAllEmployee.length) {
+      table.push(viewAllEmployee[counter++]);
+    }
 
     console.log(table.toString());
 
@@ -116,27 +123,55 @@ function viewEmployee() {
 }
 
 function viewEmployeeByDepart() {
+  let counter = 0;
+  viewAllEmployee = [];
+
   var query =
     'SELECT * FROM employee Inner Join employeeRole on employee.role_id = employeeRole.id Inner Join department on  department.id= employeeRole.department_id ORDER BY employee.employee_id;';
   connection.query(query, function (err, res) {
     for (var i = 0; i < res.length; i++) {
-      console.log(
-        `${res[i].employee_id}  ${res[i].first_name}   ${res[i].last_name}   ${res[i].department_name}`
-      );
+      viewAllEmployee.push([
+        res[i].employee_id,
+        res[i].first_name,
+        res[i].last_name,
+        res[i].department_name,
+      ]);
     }
+
+    var table = new Table();
+    table.push(['Id', 'First Name', 'Last Name', 'Department']);
+    while (counter < viewAllEmployee.length) {
+      table.push(viewAllEmployee[counter++]);
+    }
+
+    console.log(table.toString());
     whatToDO();
   });
 }
 
 function viewEmployeeByManager() {
+  let counter = 0;
+  viewAllEmployee = [];
+
   var query =
     'SELECT * FROM employee Inner Join employeeRole on employee.role_id = employeeRole.id Inner Join department on  department.id= employeeRole.department_id ORDER BY employee.employee_id;';
   connection.query(query, function (err, res) {
     for (var i = 0; i < res.length; i++) {
-      console.log(
-        `${res[i].employee_id}  ${res[i].first_name}   ${res[i].last_name}   ${res[i].title}`
-      );
+      viewAllEmployee.push([
+        res[i].employee_id,
+        res[i].first_name,
+        res[i].last_name,
+        res[i].manger_id,
+      ]);
     }
+
+    var table = new Table();
+    table.push(['Id', 'First Name', 'Last Name', 'Manager ID']);
+    while (counter < viewAllEmployee.length) {
+      table.push(viewAllEmployee[counter++]);
+    }
+
+    console.log(table.toString());
     whatToDO();
   });
 }
@@ -156,8 +191,6 @@ function updateEmployeeRole() {
         `${res[i].employee_id}:${res[i].first_name} ${res[i].last_name}`
       );
     }
-
-    console.log(emptyArrEmp_id_name2);
 
     inquirer
       .prompt([
@@ -192,7 +225,6 @@ function addEmployee() {
   var query2 = 'SELECT * FROM employeeRole';
   connection.query(query2, function (err, res) {
     for (var i = 0; i < res.length; i++) {
-      // console.log(res[i].department_name);
       emptyArrRol_id_name.push(`${res[i].id}:${res[i].title}`);
     }
   });
@@ -200,7 +232,6 @@ function addEmployee() {
   var query3 = 'SELECT * FROM employee';
   connection.query(query3, function (err, res) {
     for (var i = 0; i < res.length; i++) {
-      // console.log(res[i].department_name);
       emptyArrEmp_id_name.push(
         `${res[i].employee_id}:${res[i].first_name} ${res[i].last_name}`
       );
@@ -235,7 +266,6 @@ function addEmployee() {
     .then(function (answer) {
       function checkEmpty() {
         if (answer.manager === 'None') {
-          console.log('I am here');
           return -1;
         } else {
           return answer.manager.charAt(0);
@@ -255,7 +285,6 @@ function addEmployee() {
 
       connection.query(query, answer, function (err, res) {
         if (err) throw err;
-        console.log(answer.fname);
         console.log('Number of records inserted: ' + res.affectedRows);
         whatToDO();
       });
@@ -272,7 +301,6 @@ function addDepartment() {
       },
     ])
     .then(function (answer) {
-      console.log(answer.department);
       var query =
         "INSERT INTO department (department_name) VALUES ('" +
         answer.department +
@@ -280,10 +308,7 @@ function addDepartment() {
 
       connection.query(query, answer, function (err, res) {
         if (err) throw err;
-        console.log(answer.department);
         console.log('Number of records inserted: ' + res.affectedRows);
-        console.log('answer');
-        console.log(answer);
         whatToDO();
       });
     });
@@ -296,7 +321,6 @@ function addRoles() {
   var query2 = 'SELECT * FROM department';
   connection.query(query2, function (err, res) {
     for (var i = 0; i < res.length; i++) {
-      // console.log(res[i].department_name);
       emptyArrDep_id_name.push(`${res[i].id}:${res[i].department_name}`);
     }
   });
