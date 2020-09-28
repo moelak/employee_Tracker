@@ -88,7 +88,7 @@ function viewEmployee() {
   viewAllEmployee = [];
 
   var query =
-    'Select E.employee_id, E.first_name,E.last_name, E.role_id, employeeRole.*, department.*, IFNULL(CONCAT(M.first_name," ", M.last_name ),"N/A")as manager From employee E Inner Join employeeRole on E.role_id = employeeRole.id Inner Join department on  department.id= employeeRole.department_id LEFT JOIN employee M ON E.manger_id = M.employee_id;';
+    'Select E.employee_id, E.first_name,E.last_name, E.role_id, employeeRole.*, department.*, IFNULL(CONCAT(M.first_name," ", M.last_name ),"N/A")as manager From employee E Inner Join employeeRole on E.role_id = employeeRole.id Inner Join department on  department.id= employeeRole.department_id LEFT JOIN employee M ON E.manger_id = M.employee_id ORDER BY employee_id;';
 
   connection.query(query, function (err, res) {
     for (var i = 0; i < res.length; i++) {
@@ -128,7 +128,7 @@ function viewEmployeeByDepart() {
   viewAllEmployee = [];
 
   var query =
-    'Select E.employee_id, E.first_name,E.last_name, E.role_id, employeeRole.*, department.*, IFNULL(CONCAT(M.first_name," ", M.last_name ),"N/A")as manager From employee E Inner Join employeeRole on E.role_id = employeeRole.id Inner Join department on  department.id= employeeRole.department_id LEFT JOIN employee M ON E.manger_id = M.employee_id;';
+    'Select E.employee_id, E.first_name,E.last_name, E.role_id, employeeRole.*, department.*, IFNULL(CONCAT(M.first_name," ", M.last_name ),"N/A")as manager From employee E Inner Join employeeRole on E.role_id = employeeRole.id Inner Join department on  department.id= employeeRole.department_id LEFT JOIN employee M ON E.manger_id = M.employee_id ORDER BY employee_id;';
   connection.query(query, function (err, res) {
     for (var i = 0; i < res.length; i++) {
       viewAllEmployee.push([
@@ -155,7 +155,7 @@ function viewEmployeeByManager() {
   viewAllEmployee = [];
 
   var query =
-    'Select E.employee_id, E.first_name,E.last_name, E.role_id, employeeRole.*, department.*, IFNULL(CONCAT(M.first_name," ", M.last_name ),"N/A")as manager From employee E Inner Join employeeRole on E.role_id = employeeRole.id Inner Join department on  department.id= employeeRole.department_id LEFT JOIN employee M ON E.manger_id = M.employee_id;';
+    'Select E.employee_id, E.first_name,E.last_name, E.role_id, employeeRole.*, department.*, IFNULL(CONCAT(M.first_name," ", M.last_name ),"N/A")as manager From employee E Inner Join employeeRole on E.role_id = employeeRole.id Inner Join department on  department.id= employeeRole.department_id LEFT JOIN employee M ON E.manger_id = M.employee_id ORDER BY employee_id;';
   connection.query(query, function (err, res) {
     for (var i = 0; i < res.length; i++) {
       viewAllEmployee.push([
